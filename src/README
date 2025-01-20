@@ -1,0 +1,7 @@
+
+
+1) create utility class for all the regex patterns necessary
+2) Constants for the repetitive parts of the Regex we create
+3) FileReader which receives the file and creates a bufferedStream from it
+4) Parser class for created BufferedStream.
+

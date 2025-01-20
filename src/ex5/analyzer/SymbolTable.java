@@ -1,6 +1,7 @@
 package ex5.analyzer;
 
 import ex5.Constants.Constants;
+import ex5.model.VariableType;
 
 import java.util.HashMap;
 
