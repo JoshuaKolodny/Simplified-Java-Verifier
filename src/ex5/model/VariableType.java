@@ -1,4 +1,4 @@
-package ex5.analyzer;
+package ex5.model;
 
 public enum VariableType {
     INT,
