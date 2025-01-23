@@ -8,52 +8,52 @@ import java.util.regex.Pattern;
 
 
 public class RegexPatterns {
-    private static final String IDENTIFIER_NAME = "(_?[A-Za-z]\\w*)\\s*";
-    private static final String METHOD_NAME = "([A-Za-z]\\w*)\\s*";
-    private static final String INTEGER_REGEX = "[+-]?\\d+";
-    private static final String DOUBLE_REGEX = "[+-]?(?:\\.\\d+|\\d+\\.\\d*)";
-    private static final String STRING_REGEX = "\".*\"";
+    private static final String IDENTIFIER_NAME = "_?[A-Za-z]\\w*+\\s*+";
+    private static final String METHOD_NAME = "[A-Za-z]\\w*+\\s*+";
+    private static final String INTEGER_REGEX = "[+-]?+\\d++";
+    private static final String DOUBLE_REGEX = "[+-]?+(?:\\.\\d++|\\d++\\.\\d*+)";
+    private static final String STRING_REGEX = "\".*?\"";
     private static final String CHAR_REGEX = "'.'";
     private static final String BOOLEAN_REGEX = "true|false";
-    private static final String FINAL = "(final\\s+)?";
+    private static final String FINAL = "(?:final\\s++)?+";
     private static final String CONDITION_PARAM = "(?:"
             + IDENTIFIER_NAME + "|"
             + INTEGER_REGEX + "|"
             + DOUBLE_REGEX + "|"
             + BOOLEAN_REGEX + ")";
-    private static final String CONDITION_PATTERN = "\\s*"
+    private static final String CONDITION_PATTERN = "\\s*+"
             + CONDITION_PARAM
-            + "(?:\\s*(?:\\|\\||&&)\\s*" + CONDITION_PARAM + ")*\\s*";
-    private static final String VARIABLE_TYPES = "(int|double|char|String|boolean)\\s+";
+            + "(?:\\s*+(?:\\|\\||&&)\\s*+" + CONDITION_PARAM + ")*\\s*+";
+    private static final String VARIABLE_TYPES = "(int|double|char|String|boolean)\\s++";
     private static final String METHOD_PARAM = FINAL + VARIABLE_TYPES + IDENTIFIER_NAME;
     private static final String ALL_OPTIONS = DOUBLE_REGEX
             + "|" + BOOLEAN_REGEX + "|" + INTEGER_REGEX + "|" + STRING_REGEX + "|"
             + CHAR_REGEX + "|" + IDENTIFIER_NAME;
-    private static final String ASSIGNMENT_REGEX = IDENTIFIER_NAME + "(=\\s*" + "(?:" + ALL_OPTIONS + "))";
+    private static final String ASSIGNMENT_REGEX = IDENTIFIER_NAME + "(=\\s*+" + "(?:" + ALL_OPTIONS + "))";
 
 
     public static final Map<String, Pattern> patterns = new HashMap<>();
     public static final Map<String, Pattern> valueTypePatterns = new HashMap<>();
 
 
-    private static final Pattern COMMENT_PATTERN = Pattern.compile("^//.*");
+    private static final Pattern COMMENT_PATTERN = Pattern.compile("^//.*+");
     static Pattern VAR_DEC_PATTERN = Pattern.compile(
-            "^\\s*" + FINAL + VARIABLE_TYPES + ASSIGNMENT_REGEX + "?\\s*(?:,\\s*" + ASSIGNMENT_REGEX + "?\\s*)*;\\s*$"
+            "^\\s*+" + FINAL + VARIABLE_TYPES + ASSIGNMENT_REGEX + "?+\\s*+(?:,\\s*+" + ASSIGNMENT_REGEX + "?\\s*+)*+;\\s*+$"
     );
-    private static final Pattern ASSIGNMENT_PATTERN = Pattern.compile("\\s*" + ASSIGNMENT_REGEX + "\\s*;\\s*$");
-    private static final Pattern METHOD_DEC_PATTERN = Pattern.compile("^\\s*void\\s+" + METHOD_NAME + "\\("
-            + "\\s*(?:" + METHOD_PARAM + "(?:,\\s*" + METHOD_PARAM + ")*)?" + "\\)\\s*\\{\\s*$");
+    private static final Pattern ASSIGNMENT_PATTERN = Pattern.compile("\\s*+" + ASSIGNMENT_REGEX + "\\s*+;\\s*+$");
+    private static final Pattern METHOD_DEC_PATTERN = Pattern.compile("^\\s*+void\\s++" + METHOD_NAME + "\\("
+            + "\\s*+(?:" + METHOD_PARAM + "(?:,\\s*+" + METHOD_PARAM + ")*+)?+" + "\\)\\s*+\\{\\s*+$");
     private static final Pattern METHOD_CALL_PATTERN = Pattern.compile(
-            "\\s*" + IDENTIFIER_NAME + "\\(\\s*"
-                    + "(?:(?:" + ALL_OPTIONS + ")(?:\\s*,\\s*(?:" + ALL_OPTIONS + "))*)?"
-                    + "\\s*\\)\\s*;\\s*$"
+            "\\s*+" + IDENTIFIER_NAME + "\\(\\s*+"
+                    + "(?:(?:" + ALL_OPTIONS + ")(?:\\s*+,\\s*+(?:" + ALL_OPTIONS + "))*+)?+"
+                    + "\\s*+\\)\\s*+;\\s*+$"
     );
 
-    private static final Pattern RETURN_PATTERN = Pattern.compile("^\\s*return\\s*;$");
+    private static final Pattern RETURN_PATTERN = Pattern.compile("^\\s*+return\\s*+;$");
     private static final Pattern IF_WHILE_PATTERN = Pattern.compile(
-            "^\\s*(?:if|while)\\s*\\(\\s*"
+            "^\\s*+(?:if|while)\\s*+\\(\\s*+"
                     + CONDITION_PATTERN
-                    + "\\s*\\)\\s*\\{\\s*$"
+                    + "\\s*+\\)\\s*+\\{\\s*+$"
     );
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile(IDENTIFIER_NAME);
     private static final Pattern INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);

@@ -34,7 +34,7 @@ public class AssignmentStatement implements Statement {
         //    Or if assignedValue is a literal => check it's type-compatible.
         //    We'll keep it super simple here:
         String assignedVarTypeString = RegexPatterns.findValueTypePattern(assignedValue);
-        VariableType assignedVariableType = null;
+        VariableType assignedVariableType;
         if (assignedVarTypeString.equals(Constants.IDENTIFIER)) {
             Variable variable = scope.findVariable(assignedValue);
             if (variable == null || variable.getValueType() == null) {

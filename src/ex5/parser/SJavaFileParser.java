@@ -87,7 +87,7 @@ public class SJavaFileParser {
                         currentScope.addStatement(stmt);
                     }
                     case Constants.RETURN_STATEMENT -> {
-                        currentScope.addStatement(new ReturnStatement());
+                        //ignore
                     }
                     case Constants.IF_WHILE_STATEMENT -> {
                         // create sub-scope

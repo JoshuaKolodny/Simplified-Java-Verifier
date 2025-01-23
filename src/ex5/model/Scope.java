@@ -37,7 +37,12 @@ public class Scope {
     }
 
     public void addVariable(Variable variable) {
+        localVariables.removeIf(var -> var.getName().equals(variable.getName()));
         localVariables.add(variable);
+    }
+
+    private void removeVariable(Variable variable) {
+        localVariables.remove(variable);
     }
 
     public void addStatement(Statement statement) {
