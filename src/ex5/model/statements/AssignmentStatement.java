@@ -115,7 +115,8 @@ public class AssignmentStatement implements Statement {
     private VariableType getVariableTypeFromScope(Scope scope) throws SemanticException {
         Variable variable = scope.findVariable(assignedValue);
         if (variable == null || variable.getValueType() == null) {
-            throw new SemanticException(String.format(Constants.INCOMPATIBLE_ASSIGNMENT_MESSAGE, assignedValue));
+            throw new SemanticException(String.format(Constants.INCOMPATIBLE_ASSIGNMENT_MESSAGE,
+                    assignedValue));
         }
         return variable.getType();
     }
@@ -127,10 +128,12 @@ public class AssignmentStatement implements Statement {
      * @param assignedVariableType The type of the assigned value.
      * @throws SemanticException If the types are incompatible.
      */
-    private void validateTypeCompatibility(Variable assignedToVar, VariableType assignedVariableType) throws SemanticException {
+    private void validateTypeCompatibility(Variable assignedToVar, VariableType assignedVariableType)
+            throws SemanticException {
         // Check if the assigned value's type is compatible with the variable's type
         if (VariableType.isTypeIncompatible(assignedToVar.getType(), assignedVariableType)) {
-            throw new SemanticException(String.format(INCOMPATIBLE_VARIABLE_TYPES, assignedToVar.getType(), assignedVariableType));
+            throw new SemanticException(String.format(INCOMPATIBLE_VARIABLE_TYPES, assignedToVar.getType(),
+                    assignedVariableType));
         }
     }
 }

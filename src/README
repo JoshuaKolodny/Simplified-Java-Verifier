@@ -1,7 +1,64 @@
+joshuakol
+itamarleva
+
+1. Description of Variable Declaration regex:
+  ^\s*+
+  (?:final\s++)?+
+  (?:int|double|char|String|boolean)\s++
+  _?[A-Za-z]\w*+
+  \s*+
+  (=\s*+(?:[+-]?+(?:\.\d++|\d++\.\d*+)|true|false|[+-]?+\d++|".*?"|'.'|_?[A-Za-z]\w*+\s*+))?+
+  \s*+
+  (?:,\s*+_?[A-Za-z]\w*+\s*+(=\s*+(?:[+-]?+(?:\.\d++|\d++
+  \.\d*+)|true|false|[+-]?+\d++|".*?"|'.'|_?[A-Za-z]\w*+\s*+))?\s*+)*+
+  ;\s*+$
 
 
-1) create utility class for all the regex patterns necessary
-2) Constants for the repetitive parts of the Regex we create
-3) FileReader which receives the file and creates a bufferedStream from it
-4) Parser class for created BufferedStream.
+  A more readable version, as appeared in our code:
+    "^\\s*+" + FINAL + VARIABLE_TYPES + ASSIGNMENT_REGEX + "?+\\s*+(?:,\\s*+" +
+    ASSIGNMENT_REGEX + "?\\s*+)*+;\\s*+$"
 
+
+    Explanation:
+        ^ and \s*+ ensure the match starts at the string’s beginning with optional leading whitespace.
+        (?:final\s++)?+ optionally allows the final keyword, plus whitespace.
+        (?:int|double|char|String|boolean) enforces one of these data types.
+        _?[A-Za-z]\w*+ requires a valid identifier (optional underscore, then a letter, then word chars).
+        =\s*+(...) optionally includes an assignment (=) with a valid initializer
+        (e.g., number, boolean, string literal, char literal, or another identifier).
+        The (?:,\s*+_?[A-Za-z]\w*+(=...)?\s*+)*+ part allows additional comma-separated variables,
+        each with optional assignment.
+        ;\s*+$ ensures the declaration ends with a semicolon and optional trailing whitespace.
+
+
+2. Description of Method call regex:
+    \s*+_?[A-Za-z]\w*+\s*+\(\s*+
+    (?:(?:[+-]?+
+    (?:\.\d++|\d++\.\d*+)|true|false|[+-]?+\d++|".*?"|'.'|_?[A-Za-z]\w*+\s*+)(?:\s*+,\s*+
+    (?:[+-]?+(?:\.\d++|\d++\.\d*+)|true|false|[+-]?+\d++|".*?"|'.'|
+    _?[A-Za-z]\w*+\s*+))*+)?+\s*+\)\s*+;\s*+$
+
+    A more readable version, as appeared in our code:
+        "\\s*+" + IDENTIFIER_NAME + "\\(\\s*+"
+        + "(?:(?:" + ALL_OPTIONS + ")(?:\\s*+,\\s*+(?:" + ALL_OPTIONS + "))*+)?+"
+        + "\\s*+\\)\\s*+;\\s*+$"
+
+    Explanation:
+        \s*+: Allows optional leading whitespace.
+        _?[A-Za-z]\w*+: Matches a valid method name (optional _ plus letter and word chars).
+        \s*+: Optional whitespace before the opening parenthesis.
+        \( and \): Parentheses wrapping the argument list.
+        Inside the parentheses:
+        An optional list of arguments (the entire group is ...?+).
+        Each argument can be a number (integer or float, with optional sign),
+        boolean (true/false), string literal (".*?"), char literal ('.'), or a variable identifier.
+        Arguments can be repeated, separated by commas and optional whitespace.
+        ;: A semicolon after the closing parenthesis.
+        \s*+: Optional trailing whitespace until the end of the string ($).
+
+
+These regexes are well-structured, clearly segmented,
+and accurately capture the intended syntax. They use possessive quantifiers for efficiency,
+optional groups where appropriate, and well-defined character classes for valid identifiers,
+literals, and keywords—resulting in concise, highly readable patterns that robustly match the target
+Sjava statements.

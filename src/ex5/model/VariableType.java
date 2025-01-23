@@ -8,7 +8,35 @@ package ex5.model;
  * @author Joshua Kolodny, Itamar Lev Ari
  */
 public enum VariableType {
-    INT, DOUBLE, BOOLEAN, CHAR, STRING;
+    /**
+     * Represents an integer type in SJava.
+     * Used for whole numbers without decimal points.
+     */
+    INT,
+
+    /**
+     * Represents a double type in SJava.
+     * Used for floating-point numbers with decimal precision.
+     */
+    DOUBLE,
+
+    /**
+     * Represents a boolean type in SJava.
+     * Can hold values true or false.
+     */
+    BOOLEAN,
+
+    /**
+     * Represents a char type in SJava.
+     * Used for single-character values enclosed in single quotes.
+     */
+    CHAR,
+
+    /**
+     * Represents a string type in SJava.
+     * Used for sequences of characters enclosed in double quotes.
+     */
+    STRING;
 
     /**
      * Converts a string representation to a VariableType.

@@ -67,10 +67,10 @@ public class VarDeclarationStatement implements Statement {
 
         // If the variable is initialized, determine its assigned type
         if (eqSplit.length == 2) {
-            assignedVariableType = determineAssignedVariableType(scope, eqSplit[1].strip());
+            assignedVariableType = getVariableType(scope, eqSplit[1].strip());
         }
 
-        validateTypeCompatibility(varName, assignedVariableType);
+        validateTypeCompatibility(assignedVariableType);
         ensureVariableNotRedefined(scope, varName);
         ensureFinalVariableIsInitialized(varName, assignedVariableType);
 
@@ -80,27 +80,15 @@ public class VarDeclarationStatement implements Statement {
     }
 
     /**
-     * Determines the type of the assigned value in a variable declaration.
-     *
-     * @param scope   The current scope.
-     * @param varValue The assigned value.
-     * @return The determined variable type.
-     * @throws SemanticException If there are issues with the assigned value.
-     */
-    private VariableType determineAssignedVariableType(Scope scope, String varValue) throws SemanticException {
-        return getVariableType(scope, varValue);
-    }
-
-    /**
      * Ensures that the assigned value's type is compatible with the declared type.
      *
-     * @param varName             The variable name.
      * @param assignedVariableType The type of the assigned value.
      * @throws SemanticException If the types are incompatible.
      */
-    private void validateTypeCompatibility(String varName, VariableType assignedVariableType) throws SemanticException {
+    private void validateTypeCompatibility(VariableType assignedVariableType) throws SemanticException {
         if (assignedVariableType != null && VariableType.isTypeIncompatible(type, assignedVariableType)) {
-            throw new SemanticException(String.format(INCOMPATIBLE_VARIABLE_DECLARATION_MESSAGE, type, assignedVariableType));
+            throw new SemanticException(String.format(INCOMPATIBLE_VARIABLE_DECLARATION_MESSAGE, type,
+                    assignedVariableType));
         }
     }
 
@@ -124,7 +112,8 @@ public class VarDeclarationStatement implements Statement {
      * @param assignedVariableType The assigned variable type.
      * @throws SemanticException If a final variable is not initialized.
      */
-    private void ensureFinalVariableIsInitialized(String varName, VariableType assignedVariableType) throws SemanticException {
+    private void ensureFinalVariableIsInitialized(String varName, VariableType assignedVariableType)
+            throws SemanticException {
         if (isFinal && assignedVariableType == null) {
             throw new SemanticException(String.format(FINAL_VAR_NOT_INITIALIZED_MESSAGE, varName));
         }
@@ -146,7 +135,8 @@ public class VarDeclarationStatement implements Statement {
         if (variableString != null && variableString.equals(Constants.IDENTIFIER)) {
             Variable var = currentScope.findVariable(varValue);
             if (var == null || var.getValueType() == null) {
-                throw new SemanticException(String.format(Constants.INCOMPATIBLE_ASSIGNMENT_MESSAGE, varValue));
+                throw new SemanticException(String.format(Constants.INCOMPATIBLE_ASSIGNMENT_MESSAGE,
+                        varValue));
             }
             variableType = var.getType();
         } else if (variableString != null) {

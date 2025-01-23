@@ -101,8 +101,10 @@ public class IfWhileStatement implements Statement {
      * @param conditionType The type of the condition.
      * @throws SemanticException If the condition type is invalid.
      */
-    private void validateConditionType(String condition, VariableType conditionType) throws SemanticException {
-        if (conditionType != VariableType.INT && conditionType != VariableType.DOUBLE && conditionType != VariableType.BOOLEAN) {
+    private void validateConditionType(String condition, VariableType conditionType)
+            throws SemanticException {
+        if (conditionType != VariableType.INT && conditionType != VariableType.DOUBLE &&
+                conditionType != VariableType.BOOLEAN) {
             throw new SemanticException(String.format(INVALID_CONDITION_TYPE_MESSAGE, condition));
         }
     }
