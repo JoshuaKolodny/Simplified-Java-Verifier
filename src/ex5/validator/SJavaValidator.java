@@ -1,22 +1,37 @@
 package ex5.validator;
 
-import ex5.model.Program;
-import ex5.parser.SyntaxException;
+import ex5.model.*;
+import ex5.model.statements.Statement;
 
 public class SJavaValidator {
 
     /**
-     * Validates the given Program object.
-     *
-     * @param program the Program to validate
-     * @throws SemanticException if any semantic rules are violated
-     * @throws SyntaxException if any leftover syntax checking is needed
+     * Validate the entire Program's semantics.
      */
-    public static void validate(Program program) throws SemanticException, SyntaxException {
-        // Here you'd:
-        //   1) Check global variables
-        //   2) Check each method's signature and body
-        //   3) Check for final reassignments, type mismatches, etc.
-        throw new UnsupportedOperationException("validate not yet implemented");
+    public static void validate(GlobalScope globalScope) throws SemanticException {
+        // 1) Validate global scope statements/variables if you want
+        validateGlobalScope(globalScope);
+
+        // 2) Validate each method
+        for (Method m : globalScope.getMethods()) {
+            validateMethod(m);
+        }
+    }
+
+    private static void validateGlobalScope(Scope scope) throws SemanticException {
+        // For each statement, call statement.validate(scope).
+        for (Statement stmt : scope.getStatements()) {
+            stmt.validate(scope);
+        }
+    }
+
+    private static void validateMethod(Method method) throws SemanticException {
+        // If you want to allow access to global vars, you'd set
+        // method.getBodyScope().setParent(program.getGlobalScope());
+        // or done so in the parser.
+        // Then validate the method body
+        for (Statement stmt : method.getBodyScope().getStatements()) {
+            stmt.validate(method.getBodyScope());
+        }
     }
 }

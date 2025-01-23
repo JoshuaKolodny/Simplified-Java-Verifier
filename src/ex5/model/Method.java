@@ -1,39 +1,30 @@
 package ex5.model;
 
-import ex5.model.statements.Statement;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-/**
- * Represents a method (void).
- */
+/** A method with a unique name, parameters, and a dedicated Scope for its body. */
 public class Method {
+    private final String methodName;
+    private final List<Variable> parameters;
+    private final Scope bodyScope; // all statements (and sub-scopes) go here
 
-    private final String name;
-    private final Set<Variable> parameters;
-    private final Set<Statement> bodyStatements;
-
-    public Method(String name, Set<Variable> parameters) {
-        this.name = name;
+    public Method(String methodName, List<Variable> parameters, Scope bodyScope) {
+        this.methodName = methodName;
         this.parameters = parameters;
-        this.bodyStatements = new HashSet<>();
+        this.bodyScope = bodyScope;
     }
 
-    public String getName() {
-        return name;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public Set<Variable> getParameters() {
+    public List<Variable> getParameters() {
         return parameters;
     }
 
-    public Set<Statement> getBodyStatements() {
-        return bodyStatements;
+    public Scope getBodyScope() {
+        return bodyScope;
     }
 
-    public void addStatement(Statement stmt) {
-        bodyStatements.add(stmt);
-    }
 }
-

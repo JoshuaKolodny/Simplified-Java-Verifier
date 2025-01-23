@@ -2,15 +2,15 @@ package ex5.model;
 
 public class Variable {
     private final String name;
-    private final VariableType type;      // "int", "double", "String", "boolean", "char"
+    private final VariableType type;
     private final boolean isFinal;
-    private boolean isInitialized;
+    private VariableType valueType;
 
-    public Variable(String name, VariableType type, boolean isFinal, boolean isInitialized) {
+    public Variable(String name, VariableType type, boolean isFinal, VariableType valueType) {
         this.name = name;
         this.type = type;
         this.isFinal = isFinal;
-        this.isInitialized = isInitialized;
+        this.valueType = valueType;
     }
 
     public String getName() {
@@ -25,12 +25,11 @@ public class Variable {
         return isFinal;
     }
 
-    public boolean isInitialized() {
-        return isInitialized;
+    public VariableType getValueType() {
+        return valueType;
     }
 
-    public void setInitialized(boolean initialized) {
-        this.isInitialized = initialized;
+    public void setValueType(VariableType valueType) {
+        this.valueType = valueType;
     }
 }
-
