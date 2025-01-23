@@ -1,20 +1,16 @@
 package ex5.model.statements;
 
+
+import ex5.model.Scope;
+import ex5.validator.SemanticException;
+
 /**
- * Base class for any statement in a method (e.g., assignment, return, if/while, etc.).
+ * Base interface for all statements in s-Java.
  */
-public abstract class Statement {
-    // Possibly store the raw text or line number
-    private final String rawLine;
-
-    public Statement(String rawLine) {
-        this.rawLine = rawLine;
-    }
-
-    public String getRawLine() {
-        return rawLine;
-    }
-
-    public abstract void validate() throws Exception;
+public interface Statement {
+    /**
+     * Semantic validation method. Each statement implements its own logic
+     * for verifying correctness within the provided scope.
+     */
+    void validate(Scope scope) throws SemanticException;
 }
-
