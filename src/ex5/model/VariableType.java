@@ -1,8 +1,22 @@
 package ex5.model;
 
+/**
+ * Enum representing the possible variable types in SJava.
+ * Supports integer, double, boolean, character, and string types.
+ * Provides methods for type conversion and compatibility checks.
+ *
+ * @author Joshua Kolodny, Itamar Lev Ari
+ */
 public enum VariableType {
     INT, DOUBLE, BOOLEAN, CHAR, STRING;
 
+    /**
+     * Converts a string representation to a VariableType.
+     *
+     * @param s The string representation of the type.
+     * @return The corresponding VariableType.
+     * @throws IllegalArgumentException If the type is unknown.
+     */
     public static VariableType fromString(String s) {
         return switch (s) {
             case "int" -> INT;
@@ -14,20 +28,25 @@ public enum VariableType {
         };
     }
 
-    public static boolean isTypeCompatible(VariableType assignedToType, VariableType assignedValueType) {
-        // e.g. int -> double is valid? boolean -> int is valid?
-        // Implement your own rules. We'll do a tiny example:
+    /**
+     * Checks whether an assignment between two types is incompatible.
+     * This method enforces SJava's type conversion rules.
+     *
+     * @param assignedToType   The declared type of the variable.
+     * @param assignedValueType The type of the assigned value.
+     * @return True if the types are incompatible, otherwise false.
+     */
+    public static boolean isTypeIncompatible(VariableType assignedToType, VariableType assignedValueType) {
         if (assignedValueType == assignedToType) {
-            return true;
+            return false;
         }
         if (assignedToType == VariableType.DOUBLE && assignedValueType == VariableType.INT) {
-            return true;
+            return false; // Implicit conversion from int to double is allowed
         }
         if (assignedToType == VariableType.BOOLEAN) {
-            // booleans can accept int or double or boolean
-            return assignedValueType == VariableType.INT
-                    || assignedValueType == VariableType.DOUBLE;
+            // Booleans can accept int, double, or another boolean
+            return assignedValueType != VariableType.INT && assignedValueType != VariableType.DOUBLE;
         }
-        return false;
+        return true;
     }
 }
