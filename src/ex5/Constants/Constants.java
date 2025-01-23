@@ -1,8 +1,15 @@
 package ex5.Constants;
 
+/**
+ * Defines constant values used throughout the SJava parser and validator.
+ * These constants represent various types of statements, variable types, and error messages.
+ *
+ * This class serves as a central repository for shared string literals to ensure consistency
+ * across different components of the system.
+ *
+ * @author Joshua Kolodny, Itamar Lev Ari
+ */
 public class Constants {
-    public static final String LOCAL_SCOPE = "local";
-    public static final String GLOBAL_SCOPE = "global";
     public static final String COMMENT = "comment";
     public static final String ASSIGNMENT = "assignment";
     public static final String VAR_DECLARATION = "varDec";
@@ -16,6 +23,8 @@ public class Constants {
     public static final String CHAR_VAR = "char";
     public static final String STRING_VAR = "String";
     public static final String IDENTIFIER = "identifier";
+    public static final String INCOMPATIBLE_ASSIGNMENT_MESSAGE =
+            "Incompatible assignment or unknown variable %s";
 
 
 }

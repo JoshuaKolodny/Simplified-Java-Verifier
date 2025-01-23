@@ -16,6 +16,8 @@ public class RegexPatterns {
     private static final String CHAR_REGEX = "'.'";
     private static final String BOOLEAN_REGEX = "true|false";
     private static final String FINAL = "(?:final\\s++)?+";
+
+
     private static final String CONDITION_PARAM = "(?:"
             + IDENTIFIER_NAME + "|"
             + INTEGER_REGEX + "|"
@@ -24,7 +26,7 @@ public class RegexPatterns {
     private static final String CONDITION_PATTERN = "\\s*+"
             + CONDITION_PARAM
             + "(?:\\s*+(?:\\|\\||&&)\\s*+" + CONDITION_PARAM + ")*\\s*+";
-    private static final String VARIABLE_TYPES = "(int|double|char|String|boolean)\\s++";
+    private static final String VARIABLE_TYPES = "(?:int|double|char|String|boolean)\\s++";
     private static final String METHOD_PARAM = FINAL + VARIABLE_TYPES + IDENTIFIER_NAME;
     private static final String ALL_OPTIONS = DOUBLE_REGEX
             + "|" + BOOLEAN_REGEX + "|" + INTEGER_REGEX + "|" + STRING_REGEX + "|"
@@ -37,11 +39,14 @@ public class RegexPatterns {
 
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^//.*+");
-    static Pattern VAR_DEC_PATTERN = Pattern.compile(
-            "^\\s*+" + FINAL + VARIABLE_TYPES + ASSIGNMENT_REGEX + "?+\\s*+(?:,\\s*+" + ASSIGNMENT_REGEX + "?\\s*+)*+;\\s*+$"
+    private static final Pattern VAR_DEC_PATTERN = Pattern.compile(
+            "^\\s*+" + FINAL + VARIABLE_TYPES + ASSIGNMENT_REGEX + "?+\\s*+(?:,\\s*+"
+                    + ASSIGNMENT_REGEX + "?\\s*+)*+;\\s*+$"
     );
-    private static final Pattern ASSIGNMENT_PATTERN = Pattern.compile("\\s*+" + ASSIGNMENT_REGEX + "\\s*+;\\s*+$");
-    private static final Pattern METHOD_DEC_PATTERN = Pattern.compile("^\\s*+void\\s++" + METHOD_NAME + "\\("
+    private static final Pattern ASSIGNMENT_PATTERN = Pattern.compile("\\s*+"
+            + ASSIGNMENT_REGEX + "\\s*+;\\s*+$");
+    private static final Pattern METHOD_DEC_PATTERN = Pattern.compile("^\\s*+void\\s++"
+            + METHOD_NAME + "\\("
             + "\\s*+(?:" + METHOD_PARAM + "(?:,\\s*+" + METHOD_PARAM + ")*+)?+" + "\\)\\s*+\\{\\s*+$");
     private static final Pattern METHOD_CALL_PATTERN = Pattern.compile(
             "\\s*+" + IDENTIFIER_NAME + "\\(\\s*+"
@@ -62,8 +67,6 @@ public class RegexPatterns {
     private static final Pattern CHAR_PATTERN = Pattern.compile(CHAR_REGEX);
     private static final Pattern BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
 
-    //TODO delete this row
-//    Pattern test = Pattern.compile("^(?:final +)?(?:" + VARIABLE_TYPES + ") +_?[A-Za-z]\\w*(\\s*=\\s*(?:[+-]?\\.\\d+|\\d+\\.\\d*|_?[A-Za-z]\\w*|[+-]?\\d+|\".*\"|'.'|\btrue\b|\bfalse\b))?(?:\\s*,\\s*_?[A-Za-z]\\w*(\\s*=\\s*(?:[+-]?\\d+|_?[A-Za-z]\\w*|[+-]?\\.\\d+|\\d+\\.\\d*|\".*\"|'.?'\btrue\b|\bfalse\b))?)*;\\s*$");
     public static void init() {
         patterns.put(Constants.COMMENT, COMMENT_PATTERN);
         patterns.put(Constants.ASSIGNMENT, ASSIGNMENT_PATTERN);
