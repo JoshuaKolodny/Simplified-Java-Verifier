@@ -105,7 +105,8 @@ public class MethodCallStatement implements Statement {
      * @param arg The argument name or value.
      * @throws SemanticException If the types are incompatible.
      */
-    private void checkTypeCompatibility(Variable param, VariableType assignedVariableType, String arg) throws SemanticException {
+    private void checkTypeCompatibility(Variable param, VariableType assignedVariableType, String arg)
+            throws SemanticException {
         if (VariableType.isTypeIncompatible(param.getType(), assignedVariableType)) {
             throw new SemanticException(String.format(ARGUMENT_TYPE_MISMATCH_MESSAGE, arg, param.getType()));
         }
@@ -149,7 +150,8 @@ public class MethodCallStatement implements Statement {
      */
     private void validateArgumentCount(Method method) throws SemanticException {
         if (arguments.size() != method.getParameters().size()) {
-            throw new SemanticException(String.format(METHOD_ARGUMENT_MISMATCH_MESSAGE, methodName, method.getParameters().size(), arguments.size()));
+            throw new SemanticException(String.format(METHOD_ARGUMENT_MISMATCH_MESSAGE, methodName,
+                    method.getParameters().size(), arguments.size()));
         }
     }
 }

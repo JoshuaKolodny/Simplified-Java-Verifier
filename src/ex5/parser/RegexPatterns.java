@@ -6,8 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-
+/**
+ * Utility class for defining and handling regex patterns used in SJava parsing.
+ * This class provides predefined regex patterns for identifying different SJava constructs.
+ *
+ * @author Joshua Kolodny, Itamar Lev Ari
+ */
 public class RegexPatterns {
+
+    /**
+     * A map containing regex patterns for different SJava statement types.
+     * The keys are statement type identifiers, and the values are compiled regex patterns.
+     */
+    public static final Map<String, Pattern> patterns = new HashMap<>();
+    /**
+     * A map containing regex patterns for different SJava value types.
+     * The keys are value type identifiers (e.g., int, double, boolean),
+     * and the values are compiled regex patterns.
+     */
+    public static final Map<String, Pattern> valueTypePatterns = new HashMap<>();
+
+
     private static final String IDENTIFIER_NAME = "_?[A-Za-z]\\w*+\\s*+";
     private static final String METHOD_NAME = "[A-Za-z]\\w*+\\s*+";
     private static final String INTEGER_REGEX = "[+-]?+\\d++";
@@ -33,9 +52,6 @@ public class RegexPatterns {
             + CHAR_REGEX + "|" + IDENTIFIER_NAME;
     private static final String ASSIGNMENT_REGEX = IDENTIFIER_NAME + "(=\\s*+" + "(?:" + ALL_OPTIONS + "))";
 
-
-    public static final Map<String, Pattern> patterns = new HashMap<>();
-    public static final Map<String, Pattern> valueTypePatterns = new HashMap<>();
 
 
     private static final Pattern COMMENT_PATTERN = Pattern.compile("^//.*+");
@@ -67,6 +83,10 @@ public class RegexPatterns {
     private static final Pattern CHAR_PATTERN = Pattern.compile(CHAR_REGEX);
     private static final Pattern BOOLEAN_PATTERN = Pattern.compile(BOOLEAN_REGEX);
 
+    /**
+     * Initializes the regex pattern mappings used for parsing SJava code.
+     * This method associates regex patterns with their corresponding statement types.
+     */
     public static void init() {
         patterns.put(Constants.COMMENT, COMMENT_PATTERN);
         patterns.put(Constants.ASSIGNMENT, ASSIGNMENT_PATTERN);
@@ -83,6 +103,12 @@ public class RegexPatterns {
         valueTypePatterns.put(Constants.BOOL_VAR, BOOLEAN_PATTERN);
     }
 
+    /**
+     * Identifies the type of  given line based on predefined regex patterns.
+     *
+     * @param line The line of code to be analyzed.
+     * @return The corresponding pattern type as a string, or null if no match is found.
+     */
     public static String findMatchingPattern(String line) {
         for (Map.Entry<String, Pattern> entry : patterns.entrySet()) {
             if (entry.getValue().matcher(line).matches()) {
@@ -92,6 +118,12 @@ public class RegexPatterns {
         return null; // No match found
     }
 
+    /**
+     * Determines the type of given value (e.g., int, double, boolean) based on regex matching.
+     *
+     * @param line The value to be analyzed.
+     * @return The detected variable type as a string, or null if no match is found.
+     */
     public static String findValueTypePattern(String line) {
         if (BOOLEAN_PATTERN.matcher(line).matches()){
             return Constants.BOOL_VAR;
